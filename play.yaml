@@ -1,0 +1,27 @@
+---
+ - hosts: slave1
+   name: play1
+   user: ubuntu
+   tasks:
+      - name: install nginx
+        apt: name=nginx  update_cache=yes
+        become: true
+
+ - hosts: slave2
+   name: play1
+   user: ubuntu
+   tasks:
+      - name: install apache2
+        apt: name=apache2 update_cache=yes
+        become: true
+
+      - name: starting apache2 service
+        service: name=apache2 state=started
+        become: true
+
+      - name: adding website
+        script: hello.sh
+        become: yes
+          
+
+
